@@ -1,6 +1,6 @@
 import { Express } from "express";
 
-const userRoute = express.Router();
+const processoRoute = express.Router();
 
 //Database
 const bancoDados = [

@@ -12,7 +12,7 @@ const app = express();
 //CONFIGURE server to sending and receiving files in JSON
 app.use(express.json());
 
-app.use("/processo", userRoute);
+app.use("/processo", processoRoute);
 
 // Subindo o servidor (Server UP)
 app.listen(process.env.PORT, () => {
