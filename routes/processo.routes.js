@@ -19,19 +19,19 @@ const bancoDados = [
   
 //ROUTES CREATION - Intaration 1 - line 31 to 63
 //GET - all process in database
-app.get("/all", (req, res) => {
+processoRoute.get("/all", (req, res) => {
     return res.status(200).json(bancoDados);
   });
   
   //POST - create a process
-  app.post("/create", (req, res) => {
+  processoRoute.post("/create", (req, res) => {
     const form = req.body;
     bancoDados.push(form);
     return res.status(201).json(bancoDados);
   });
   
   //PUT - Edit a process by id
-  app.put("/edit/:id", (req, res) => {
+  processoRoute.put("/edit/:id", (req, res) => {
     const { id } = req.params;
     const editById = bancoDados.find((process) => process.id === id);
     const index = bancoDados.indexOf(editById);
@@ -43,7 +43,7 @@ app.get("/all", (req, res) => {
   });
   
   //DELETE a process by id
-  app.delete("/delete/:id", (req, res) => {
+  processoRoute.delete("/delete/:id", (req, res) => {
     const { id } = req.params;
     const deleteById = bancoDados.find((process) => process.id === id);
     const index = bancoDados.indexOf(deleteById);
@@ -53,7 +53,7 @@ app.get("/all", (req, res) => {
   
   //Interartion 2 - GET, PUT, GET e GET a process
   //GET a process by ID
-  app.get("/process/:id", (req, res) => {
+  processoRoute.get("/process/:id", (req, res) => {
     const { id } = req.params;
     const accessById = bancoDados.find((process) => process.id === id);
     if (!accessById) {
@@ -63,7 +63,7 @@ app.get("/all", (req, res) => {
   });
   
   //PUT -> Add a comment to array of comments by id
-  app.put("/addComment/:id", (req, res) => {
+  processoRoute.put("/addComment/:id", (req, res) => {
     const { id } = req.params;
     const comment = req.body.comment;
   
@@ -74,7 +74,7 @@ app.get("/all", (req, res) => {
   });
   
   //GET - Process by status = open
-  app.get("/status/open", (req, res) => {
+  processoRoute.get("/status/open", (req, res) => {
     const { status } = req.params;
     const inProgress = bancoDados.find((process) => process.status === "Em andamento")
     if (!inProgress) {
@@ -84,7 +84,7 @@ app.get("/all", (req, res) => {
   });
   
   //GET - Process by status = close
-  app.get("/status/close", (req, res) => {
+  processoRoute.get("/status/close", (req, res) => {
     const { status } = req.params;
     const finished = bancoDados.find((process) => process.status ===  "Finalizado")
     if (!finished) {
@@ -99,4 +99,4 @@ app.get("/all", (req, res) => {
 
 
 
-export default userRoute;
+export default processoRoute;

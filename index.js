@@ -1,6 +1,7 @@
 //Interation 0 - Server is live
 import express from "express";
 import * as dotenv from "dotenv";
+import processoRoute from "./routes/processo.routes.js";
 // import { uuid } from "uuidv4";
 
 //ENABLING THE SERVER (environment variables)
