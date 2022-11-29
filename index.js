@@ -71,7 +71,7 @@ app.get("/process/:id", (req, res) => {
   return res.status(200).json(accessById);
 });
 
-//PUT -> Add a comment to array of comments by ID
+//PUT -> Add a comment to array of comments by id
 app.put("/addComment/:id", (req, res) => {
   const { id } = req.params;
   const comment = req.body.comment;
