@@ -75,12 +75,32 @@ app.get("/process/:id", (req, res) => {
 app.put("/addComment/:id", (req, res) => {
   const { id } = req.params;
   const comment = req.body.comment;
+
   const commentById = bancoDados.find((process) => process.id === id);
   const index = bancoDados.indexOf(commentById);
   const updateComment = bancoDados[index].comments.push(comment);
   return res.status(201).json(updateComment);
 });
 
+//GET - Process by status = open
+app.get("/status/open", (req, res) => {
+  const { status } = req.params;
+  const inProgress = bancoDados.find((process) => process.status === "Em andamento")
+  if (!inProgress) {
+    return res.status(404).json({ message: "Process not found!" });
+  }
+  return res.status(200).json(inProgress);
+});
+
+//GET - Process by status = close
+app.get("/status/close", (req, res) => {
+  const { status } = req.params;
+  const finished = bancoDados.find((process) => process.status ===  "Finalizado")
+  if (!finished) {
+    return res.status(404).json({ message: "Process not found!" });
+  }
+  return res.status(200).json(finished);
+});
 
 
 // Subindo o servidor (Server UP)
