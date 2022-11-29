@@ -9,10 +9,10 @@ dotenv.config();
 //INSTANTIATE the variable responsible for server -> App
 const app = express();
 
-//CONFIGURE server to sending and receiving files in JSON 
+//CONFIGURE server to sending and receiving files in JSON
 app.use(express.json());
 
-//Database 
+//Database
 const bancoDados = [
   {
     id: "ee5999d7-02e9-4b3d-a1ab-f067eef54173",
@@ -26,18 +26,62 @@ const bancoDados = [
   },
 ];
 
-//ROUTES CREATION - Intaration 1
-//GET - all
+//ROUTES CREATION - Intaration 1 - line 31 to 63
+//GET - all process in database
 app.get("/all", (req, res) => {
   return res.status(200).json(bancoDados);
 });
 
-//POST - create
+//POST - create a process
 app.post("/create", (req, res) => {
   const form = req.body;
   bancoDados.push(form);
   return res.status(201).json(bancoDados);
 });
+
+//PUT - Edit a process by id
+app.put("/edit/:id", (req, res) => {
+  const { id } = req.params;
+  const editById = bancoDados.find((process) => process.id === id);
+  const index = bancoDados.indexOf(editById);
+  bancoDados[index] = {
+    ...editById,
+    ...req.body, // That I want to edit
+  };
+  return res.status(200).json(bancoDados[index]);
+});
+
+//DELETE a process by id
+app.delete("/delete/:id", (req, res) => {
+  const { id } = req.params;
+  const deleteById = bancoDados.find((process) => process.id === id);
+  const index = bancoDados.indexOf(deleteById);
+  bancoDados.splice(index, 1); //That I want remove/delete
+  return res.status(200).json(bancoDados);
+});
+
+//Interartion 2 - GET, PUT, GET e GET a process
+//GET a process by ID
+app.get("/process/:id", (req, res) => {
+  const { id } = req.params;
+  const accessById = bancoDados.find((process) => process.id === id);
+  if (!accessById) {
+    return res.status(404).json({ message: "Process not found!" });
+  }
+  return res.status(200).json(accessById);
+});
+
+//PUT -> Add a comment to array of comments by ID
+app.put("/addComment/:id", (req, res) => {
+  const { id } = req.params;
+  const comment = req.body.comment;
+  const commentById = bancoDados.find((process) => process.id === id);
+  const index = bancoDados.indexOf(commentById);
+  const updateComment = bancoDados[index].comments.push(comment);
+  return res.status(201).json(updateComment);
+});
+
+
 
 // Subindo o servidor (Server UP)
 app.listen(process.env.PORT, () => {
